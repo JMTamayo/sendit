@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'sendit-email-consumer/**'
   pull_request:
     branches:
       - main
