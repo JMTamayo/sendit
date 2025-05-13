@@ -1,0 +1,59 @@
+name: sendit-email-consumer-ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  CARGO_TERM_COLOR: always
+  APP_ROOT_PATH: ./sendit-email-consumer
+
+jobs:
+  Format:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: "Repository: Fetch"
+        uses: actions/checkout@v4
+
+      - name: "Setup: Install Rust"
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: rustfmt
+
+      - name: "Step: Check Format"
+        run: cd $APP_ROOT_PATH && cargo fmt --all --check
+
+  Lints:
+    runs-on: ubuntu-24.04
+    needs: Format
+
+    steps:
+      - name: "Repository: Fetch"
+        uses: actions/checkout@v4
+
+      - name: "Setup: Install Rust"
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: clippy
+
+      - name: "Step: Lints"
+        run: cd $APP_ROOT_PATH && cargo clippy --all-features
+
+  Build:
+    runs-on: ubuntu-24.04
+    needs: Lints
+
+    steps:
+      - name: "Repository: Fetch"
+        uses: actions/checkout@v4
+
+      - name: "Setup: Install Rust"
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: "Step: Build"
+        run: cd $APP_ROOT_PATH && cargo build --all-features
