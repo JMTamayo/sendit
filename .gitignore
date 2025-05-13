@@ -52,3 +52,6 @@ go.work
 
 # Macbook
 .DS_Store
+
+# VSCode
+.vscode/
