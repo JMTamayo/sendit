@@ -1,4 +1,4 @@
-FROM rust:1.86.0
+FROM rust:1.86.0 AS builder
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ COPY ./Cargo.toml ./Cargo.toml
 
 RUN cargo build --release
 
-FROM debian:12.10
+FROM rust:1.86.0-slim
 
 COPY --from=builder /app/target/release/sendit-email-consumer .
 
