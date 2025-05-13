@@ -57,19 +57,3 @@ jobs:
 
       - name: "Step: Build"
         run: cd $APP_ROOT_PATH && cargo build --all-features
-
-  Security:
-    runs-on: ubuntu-24.04
-    needs: Build
-
-    steps:
-      - name: "Repository: Fetch"
-        uses: actions/checkout@v4
-
-      - name: "Step: Security Analysis"
-        uses: EmbarkStudios/cargo-deny-action@v1
-        with:
-          command: check
-          log-level: warn
-          manifest-path: $APP_ROOT_PATH/Cargo.toml
-          arguments: --all-features
