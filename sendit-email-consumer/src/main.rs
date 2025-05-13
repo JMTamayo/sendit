@@ -95,7 +95,10 @@ async fn main() {
 
             let ack: RedsumerResult<AckMessageReply> = consumer.ack(&m.id).await;
             match ack {
-                Ok(_) => log::info!("Message acknowledged: {m:?}", m = m.id),
+                Ok(reply) => match reply.was_acked() {
+                    true => log::info!("Message acknowledged: {m:?}", m = m.id),
+                    false => log::error!("Error acknowledging message: {m:?}", m = m.id),
+                },
                 Err(e) => {
                     log::error!("Error acknowledging message: {e}");
                 }
