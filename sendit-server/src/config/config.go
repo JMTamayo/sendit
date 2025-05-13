@@ -72,6 +72,7 @@ type Config struct {
 	redisDB   int
 
 	streamNameEmailQueue string
+	keyNameData          string
 }
 
 func (c *Config) GetServiceName() string {
@@ -110,6 +111,10 @@ func (c *Config) GetStreamNameEmailQueue() string {
 	return c.streamNameEmailQueue
 }
 
+func (c *Config) GetKeyNameData() string {
+	return c.keyNameData
+}
+
 func buildConfig() *Config {
 	serviceName := "Sendit Server"
 	servicePort := 8000
@@ -129,6 +134,8 @@ func buildConfig() *Config {
 	}
 	streamNameEmailQueue := getFromEnv("STREAM_NAME_EMAIL_QUEUE")
 
+	keyNameData := getFromEnv("KEY_EMAIL_DATA")
+
 	return &Config{
 		serviceName:          serviceName,
 		servicePort:          servicePort,
@@ -139,6 +146,7 @@ func buildConfig() *Config {
 		redisPort:            redisPort,
 		redisDB:              redisDB,
 		streamNameEmailQueue: streamNameEmailQueue,
+		keyNameData:          keyNameData,
 	}
 }
 
