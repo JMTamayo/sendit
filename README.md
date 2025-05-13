@@ -4,6 +4,13 @@ Aplicación que permite el envío de emails de forma masiva mediante una arquite
 
 <img src="assets/flow-diagram.png" width="100%">
 
+## Distribución de la Aplicación:
+
+La aplicación se encuentra distribuida en los siguientes servicios:
+
+- `sendit-server`: Servidor que se encarga de recibir las solicitudes de envío de emails y de producir eventos al servicio de eventos para posteriormente ser procesados por el servicio de `sendit-email-consumer`.
+- `sendit-email-consumer`: Servidor que se encarga de consumir los eventos de redis y de enviar los emails.
+- `redis-server`: Servidor de eventos que se encarga de almacenar los eventos producidos por el servidor `sendit-server` y de distribuirlos al servidor `sendit-email-consumer` para su procesamiento. Este servicio es de uso opcional, ya que se puede usar un servidor de eventos externo.
 
 ## Ejecución del Proyecto:
 
