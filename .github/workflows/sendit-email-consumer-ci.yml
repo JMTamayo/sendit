@@ -1,0 +1,74 @@
+name: sendit-email-consumer-ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  Format:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: "Repository: Fetch"
+        uses: actions/checkout@v4
+
+      - name: "Setup: Install Rust"
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: rustfmt
+
+      - name: "Step: Check Format"
+        run: cargo fmt --all --check
+
+  Lints:
+    runs-on: ubuntu-24.04
+    needs: Format
+
+    steps:
+      - name: "Repository: Fetch"
+        uses: actions/checkout@v4
+
+      - name: "Setup: Install Rust"
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: clippy
+
+      - name: "Step: Lints"
+        run: cargo clippy --all-features
+
+  Build:
+    runs-on: ubuntu-24.04
+    needs: Lints
+
+    steps:
+      - name: "Repository: Fetch"
+        uses: actions/checkout@v4
+
+      - name: "Setup: Install Rust"
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: "Step: Build"
+        run: cargo build --all-features
+
+  Security:
+    runs-on: ubuntu-24.04
+    needs: Lints
+
+    steps:
+      - name: "Repository: Fetch"
+        uses: actions/checkout@v4
+
+      - name: "Step: Security Analysis"
+        uses: EmbarkStudios/cargo-deny-action@v1
+        with:
+          command: check
+          log-level: warn
+          manifest-path: ./sendit-email-consumer/Cargo.toml
+          arguments: --all-features
