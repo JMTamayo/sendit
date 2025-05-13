@@ -10,6 +10,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  APP_ROOT_PATH: ./sendit-email-consumer
 
 jobs:
   Format:
@@ -25,7 +26,7 @@ jobs:
           components: rustfmt
 
       - name: "Step: Check Format"
-        run: cargo fmt --all --check
+        run: cd $APP_ROOT_PATH && cargo fmt --all --check
 
   Lints:
     runs-on: ubuntu-24.04
@@ -41,7 +42,7 @@ jobs:
           components: clippy
 
       - name: "Step: Lints"
-        run: cargo clippy --all-features
+        run: cd $APP_ROOT_PATH && cargo clippy --all-features
 
   Build:
     runs-on: ubuntu-24.04
@@ -55,11 +56,11 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: "Step: Build"
-        run: cargo build --all-features
+        run: cd $APP_ROOT_PATH && cargo build --all-features
 
   Security:
     runs-on: ubuntu-24.04
-    needs: Lints
+    needs: Build
 
     steps:
       - name: "Repository: Fetch"
@@ -70,5 +71,5 @@ jobs:
         with:
           command: check
           log-level: warn
-          manifest-path: ./sendit-email-consumer/Cargo.toml
+          manifest-path: $APP_ROOT_PATH/Cargo.toml
           arguments: --all-features
