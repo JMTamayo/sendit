@@ -32,10 +32,7 @@ impl FromRedisValue for EmailData {
         match serde_json::from_str(&json_str) {
             Ok(data) => Ok(data),
             Err(e) => {
-                log::error!(
-                    "Error parsing email data from stream message: {e}",
-                    e = e.to_string()
-                );
+                log::error!("Error parsing email data from stream message: {e}",);
                 Err((
                     ErrorKind::TypeError,
                     "Error parsing email data from stream message",

@@ -40,7 +40,7 @@ async fn main() {
         let messages: Vec<StreamId> = match consumer.consume().await {
             Ok(reply) => reply.get_messages().to_owned(),
             Err(e) => {
-                log::error!("Error consuming messages: {e}", e = e.to_string());
+                log::error!("Error consuming messages: {e}");
                 continue;
             }
         };
@@ -61,10 +61,7 @@ async fn main() {
                     }
                 },
                 Err(e) => {
-                    log::error!(
-                        "Error checking if message is still in consumer pending list: {e}",
-                        e = e.to_string()
-                    );
+                    log::error!("Error checking if message is still in consumer pending list: {e}",);
                     continue;
                 }
             }
@@ -80,10 +77,7 @@ async fn main() {
             let email_data: EmailData = match EmailData::from_redis_value(value) {
                 Ok(data) => data,
                 Err(e) => {
-                    log::error!(
-                        "Error parsing email data from stream message: {e}",
-                        e = e.to_string()
-                    );
+                    log::error!("Error parsing email data from stream message: {e}",);
                     continue;
                 }
             };
@@ -103,7 +97,7 @@ async fn main() {
             match ack {
                 Ok(_) => log::info!("Message acknowledged: {m:?}", m = m.id),
                 Err(e) => {
-                    log::error!("Error acknowledging message: {e}", e = e.to_string());
+                    log::error!("Error acknowledging message: {e}");
                 }
             }
         }
