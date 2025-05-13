@@ -15,7 +15,7 @@ type RedisService struct {
 	streamName string
 }
 
-func NewRedisService(ctx context.Context) *RedisService {
+func NewRedisService(ctx context.Context) (*RedisService, *models.Error) {
 	addr := fmt.Sprintf("%s:%d", config.Conf.GetRedisHost(), config.Conf.GetRedisPort())
 
 	opts := &redis.Options{
@@ -30,13 +30,13 @@ func NewRedisService(ctx context.Context) *RedisService {
 	_, err := client.Ping(ctx).Result()
 	if err != nil {
 		config.Log.Error(fmt.Sprintf("Error connecting to streams server: %v", err))
-		return nil
+		return nil, models.NewError(fmt.Sprintf("Error connecting to streams server: %v", err))
 	}
 
 	return &RedisService{
 		client:     client,
 		streamName: config.Conf.GetStreamNameEmailQueue(),
-	}
+	}, nil
 }
 
 func (s *RedisService) Produce(ctx context.Context, message any) (*string, *models.Error) {

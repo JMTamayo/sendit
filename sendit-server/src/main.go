@@ -14,7 +14,10 @@ func main() {
 
 	ctx := gin.Context{}
 
-	server := server.BuildServer(&ctx)
+	server, err := server.BuildServer(&ctx)
+	if err != nil {
+		panic(err)
+	}
 
 	server.Run(config.Conf.GetServiceAddress())
 }

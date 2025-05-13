@@ -18,10 +18,15 @@ type EmailHandler struct {
 	redisService *services.RedisService
 }
 
-func NewEmailHandler(ctx context.Context) *EmailHandler {
-	return &EmailHandler{
-		redisService: services.NewRedisService(ctx),
+func NewEmailHandler(ctx context.Context) (*EmailHandler, *models.Error) {
+	redisService, err := services.NewRedisService(ctx)
+	if err != nil {
+		return nil, err
 	}
+
+	return &EmailHandler{
+		redisService: redisService,
+	}, nil
 }
 
 // Send email service documentation
@@ -64,7 +69,7 @@ func (h *EmailHandler) SendEmail(c *gin.Context) {
 		return
 	}
 
-	message := map[string]string{"data": string(data)}
+	message := map[string]string{config.Conf.GetKeyNameData(): string(data)}
 
 	id, err := h.redisService.Produce(c.Request.Context(), message)
 	if err != nil {
