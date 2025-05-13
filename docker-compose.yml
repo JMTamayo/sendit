@@ -1,0 +1,14 @@
+services:
+  sendit-email-consumer:
+    build:
+      context: ./sendit-email-consumer
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env
+    restart: unless-stopped
+    networks:
+      - sendit-network
+
+networks:
+  sendit-network:
+    driver: bridge 
