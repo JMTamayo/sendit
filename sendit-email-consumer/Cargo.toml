@@ -1,0 +1,18 @@
+[package]
+name = "sendit-email-consumer"
+description = "event consumer for massive emails sending"
+version = "1.0.0"
+edition = "2021"
+license = "../LICENSE"
+readme = "../README.md"
+
+[dependencies]
+tokio = { version = "1.45.0", features = ["full"] }
+redsumer = { version = "0.5.4" }
+serde = { version = "1.0.219", features = ["derive"] }
+serde_json = { version = "1.0.140" }
+env_logger = { version = "0.11.8" }
+log = { version = "0.4.27" }
+lazy_static = { version = "1.5.0" }
+lettre = { version = "0.11.16" }
+chrono = { version = "0.4.41" }
