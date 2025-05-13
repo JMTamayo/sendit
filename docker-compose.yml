@@ -1,4 +1,16 @@
 services:
+  sendit-server:
+    build:
+      context: ./sendit-server
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    networks:
+      - sendit-network
+
   sendit-email-consumer:
     build:
       context: ./sendit-email-consumer
@@ -11,4 +23,4 @@ services:
 
 networks:
   sendit-network:
-    driver: bridge 
+    driver: bridge
