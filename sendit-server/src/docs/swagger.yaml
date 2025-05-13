@@ -1,0 +1,65 @@
+definitions:
+  models.Email:
+    properties:
+      body:
+        type: string
+      recipient:
+        type: string
+      subject:
+        type: string
+    required:
+    - body
+    - recipient
+    - subject
+    type: object
+  models.Error:
+    properties:
+      details:
+        type: string
+    type: object
+  models.SendEmailResponse:
+    properties:
+      details:
+        type: string
+      email:
+        $ref: '#/definitions/models.Email'
+      id:
+        type: string
+      success:
+        type: boolean
+    type: object
+info:
+  contact: {}
+paths:
+  /notifications/email:
+    post:
+      consumes:
+      - application/json
+      description: Send an email to a recipient with a specific subject and body.
+        This endpoint produces a stream event that is processed by the email service.
+      parameters:
+      - description: Email
+        in: body
+        name: email
+        required: true
+        schema:
+          $ref: '#/definitions/models.Email'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SendEmailResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Send an email
+      tags:
+      - Notifications
+swagger: "2.0"
