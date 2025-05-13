@@ -1,5 +1,5 @@
 services:
-  sendit-server:
+  server:
     build:
       context: ./sendit-server
       dockerfile: Dockerfile
@@ -11,12 +11,24 @@ services:
     networks:
       - sendit-network
 
-  sendit-email-consumer:
+  email-consumer:
     build:
       context: ./sendit-email-consumer
       dockerfile: Dockerfile
     env_file:
       - ./.env
+    restart: unless-stopped
+    networks:
+      - sendit-network
+
+  redis:
+    build:
+      context: ./redis-server
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env
+    ports:
+      - "6379:6379"
     restart: unless-stopped
     networks:
       - sendit-network
