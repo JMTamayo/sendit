@@ -73,6 +73,9 @@ type Config struct {
 
 	streamNameEmailQueue string
 	keyNameData          string
+
+	geminiAPIKey string
+	geminiModel  string
 }
 
 func (c *Config) GetServiceName() string {
@@ -115,8 +118,16 @@ func (c *Config) GetKeyNameData() string {
 	return c.keyNameData
 }
 
+func (c *Config) GetGeminiAPIKey() string {
+	return c.geminiAPIKey
+}
+
+func (c *Config) GetGeminiModel() string {
+	return c.geminiModel
+}
+
 func buildConfig() *Config {
-	serviceName := "Sendit Server"
+	serviceName := "sendit-email-assistant"
 	servicePort := 8000
 	logLevel := getFromEnv("LOG_LEVEL")
 
@@ -133,8 +144,9 @@ func buildConfig() *Config {
 		panic(fmt.Sprintf("REDIS_DB is not a valid number: %s", err))
 	}
 	streamNameEmailQueue := getFromEnv("STREAM_NAME_EMAIL_QUEUE")
-
 	keyNameData := getFromEnv("KEY_EMAIL_DATA")
+	geminiAPIKey := getFromEnv("GEMINI_API_KEY")
+	geminiModel := getFromEnv("GEMINI_MODEL")
 
 	return &Config{
 		serviceName:          serviceName,
@@ -147,6 +159,8 @@ func buildConfig() *Config {
 		redisDB:              redisDB,
 		streamNameEmailQueue: streamNameEmailQueue,
 		keyNameData:          keyNameData,
+		geminiAPIKey:         geminiAPIKey,
+		geminiModel:          geminiModel,
 	}
 }
 

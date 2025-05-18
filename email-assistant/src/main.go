@@ -1,15 +1,15 @@
 package main
 
 import (
-	"sendit.server/src/api"
-	"sendit.server/src/config"
-	"sendit.server/src/docs"
+	"email.assistant/src/api"
+	"email.assistant/src/config"
+	"email.assistant/src/docs"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	docs.SwaggerInfo.Title = "Sendit"
+	docs.SwaggerInfo.Title = "Sendit - Email Assistant"
 	docs.SwaggerInfo.Version = "1.0.0"
 
 	ctx := gin.Context{}

@@ -8,9 +8,9 @@ Aplicación que permite el envío de emails de forma masiva mediante una arquite
 
 La aplicación se encuentra distribuida en los siguientes servicios:
 
-- `sendit-server`: Servidor que se encarga de recibir las solicitudes de envío de emails y de producir eventos al servicio de eventos para posteriormente ser procesados por el servicio de `sendit-email-consumer`.
-- `sendit-email-consumer`: Servidor que se encarga de consumir los eventos de redis y de enviar los emails.
-- `redis-server`: Servidor de eventos que se encarga de almacenar los eventos producidos por el servidor `sendit-server` y de distribuirlos al servidor `sendit-email-consumer` para su procesamiento. Este servicio es de uso opcional, ya que se puede usar un servidor de eventos externo.
+- `email-assistant`: Servidor que se encarga de recibir las solicitudes de envío de emails, de validarlos con ayuda de inteligencia artificial y de producir eventos al servicio de eventos para posteriormente ser procesados por el servicio de `sendit-email-consumer`.
+- `email-consumer`: Servidor que se encarga de consumir los eventos de redis y de enviar los emails.
+- `redis-server`: Servidor de eventos que se encarga de almacenar los eventos producidos por el servicio `email-assistant` y de distribuirlos al servidor `email-consumer` para su procesamiento. Este servicio es de uso opcional, ya que se puede usar un servidor de eventos externo.
 
 ## Ejecución del Proyecto:
 
@@ -79,13 +79,13 @@ Se brindan dos comandos para ejecutar el proyecto, donde el primero incluye la e
 - **Modo 1**: Ejecución del proyecto completo. Este modo es útil para usar el servidor de eventos de redis que se encuentra en el proyecto.
 
     ```bash
-        docker-compose up --build
+        sudo docker-compose up --build
     ```
 
 - **Modo 2**: Ejecución del servidor y el consumidor de emails. Este modo es útil para usar un servidor de eventos externo al proyecto.
 
     ```bash
-        docker compose up server email-consumer
+        sudo docker compose up email-assistant email-consumer
     ```
 
 Los siguientes comandos son útiles para detener el proyecto:
@@ -93,11 +93,11 @@ Los siguientes comandos son útiles para detener el proyecto:
 - **Detener todos los contenedores del proyecto**:
 
     ```bash
-        docker compose down
+        sudo docker compose down
     ```
 
 - **Detener algún contenedor en específico**:
 
     ```bash
-        docker compose down <nombre_del_contenedor>
+        sudo docker compose down <nombre_del_contenedor>
     ```

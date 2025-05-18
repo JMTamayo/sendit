@@ -5,8 +5,8 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
-	"sendit.server/src/api/routes"
-	"sendit.server/src/models"
+	"email.assistant/src/api/routes"
+	"email.assistant/src/models"
 )
 
 type Server struct{}

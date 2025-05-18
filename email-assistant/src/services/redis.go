@@ -6,8 +6,8 @@ import (
 
 	"github.com/redis/go-redis/v9"
 
-	"sendit.server/src/config"
-	"sendit.server/src/models"
+	"email.assistant/src/config"
+	"email.assistant/src/models"
 )
 
 type RedisService struct {

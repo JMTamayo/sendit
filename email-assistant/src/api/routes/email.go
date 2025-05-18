@@ -3,8 +3,8 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 
-	"sendit.server/src/handlers"
-	"sendit.server/src/models"
+	"email.assistant/src/handlers"
+	"email.assistant/src/models"
 )
 
 type EmailRouter struct {

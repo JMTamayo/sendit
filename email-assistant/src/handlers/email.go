@@ -9,13 +9,22 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 
-	"sendit.server/src/config"
-	"sendit.server/src/models"
-	"sendit.server/src/services"
+	"email.assistant/src/config"
+	"email.assistant/src/models"
+	"email.assistant/src/services"
 )
 
 type EmailHandler struct {
-	redisService *services.RedisService
+	redisService  *services.RedisService
+	geminiService *services.GeminiService
+}
+
+func (h *EmailHandler) getRedisService() *services.RedisService {
+	return h.redisService
+}
+
+func (h *EmailHandler) getGeminiService() *services.GeminiService {
+	return h.geminiService
 }
 
 func NewEmailHandler(ctx context.Context) (*EmailHandler, *models.Error) {
@@ -24,8 +33,14 @@ func NewEmailHandler(ctx context.Context) (*EmailHandler, *models.Error) {
 		return nil, err
 	}
 
+	geminiService, err := services.NewGeminiService(ctx)
+	if err != nil {
+		return nil, err
+	}
+
 	return &EmailHandler{
-		redisService: redisService,
+		redisService:  redisService,
+		geminiService: geminiService,
 	}, nil
 }
 
@@ -36,7 +51,7 @@ func NewEmailHandler(ctx context.Context) (*EmailHandler, *models.Error) {
 // @Accept json
 // @Produce json
 // @Param email body models.Email true "Email"
-// @Success 200 {object} models.SendEmailResponse
+// @Success 201 {object} models.SendEmailResponse
 // @Failure 400 {object} models.Error
 // @Failure 500 {object} models.Error
 // @Router /notifications/email [post]
@@ -69,9 +84,21 @@ func (h *EmailHandler) SendEmail(c *gin.Context) {
 		return
 	}
 
+	config.Log.Debug(fmt.Sprintf("Email to verify: %v", string(data)))
+
+	validationErr := h.getGeminiService().VerifyEmail(c.Request.Context(), email.Body)
+	if validationErr != nil {
+		c.JSON(http.StatusBadRequest, models.NewError(
+			fmt.Sprintf("Invalid email: %v", *validationErr),
+		))
+		return
+	}
+
+	config.Log.Debug("Email successfully verified")
+
 	message := map[string]string{config.Conf.GetKeyNameData(): string(data)}
 
-	id, err := h.redisService.Produce(c.Request.Context(), message)
+	id, err := h.getRedisService().Produce(c.Request.Context(), message)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.NewError(
 			fmt.Sprintf("Error producing message to Redis: %v", err),
@@ -86,5 +113,5 @@ func (h *EmailHandler) SendEmail(c *gin.Context) {
 		Id:      *id,
 	}
 
-	c.JSON(http.StatusOK, response)
+	c.JSON(http.StatusCreated, response)
 }
