@@ -17,7 +17,7 @@ La aplicación se encuentra distribuida en los siguientes servicios:
 ### 1. Variables de Entorno:
 - Crear un archivo `.env` en la raiz del proyecto, a la misma altura que el archivo `docker-compose.yaml`.
 
-- Definir las siguientes variables de entorno en el archivo `.env`:
+- Las siguientes variables de entorno son requeridas para la ejecución del proyecto completo. Para cada servicio se debe crear un archivo `.env` en su carpeta respectiva, con las variables de entorno necesarias para su ejecución.
 
     - **Filtro de logs**: Definir el valor de la variable con el nivel de logs que se desea obtener. Se sugiere usar el nivel `debug` para obtener todos los logs.
 
@@ -70,6 +70,13 @@ La aplicación se encuentra distribuida en los siguientes servicios:
             EMAIL_RELAY
             EMAIL_USERNAME
             EMAIL_PASSWORD
+        ```
+
+    - **Configuración de Gemini**: Definir las credenciales de la API de Gemini.
+
+        ```
+            GEMINI_API_KEY
+            GEMINI_MODEL
         ```
 
 ### 2. Ejecución:
