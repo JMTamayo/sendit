@@ -1,4 +1,4 @@
-name: sendit-server-ci
+name: sendit-email-assistant-ci
 
 on:
     push:
@@ -8,10 +8,10 @@ on:
       branches:
         - main
       paths:
-        - 'sendit-server/**'
+        - 'email-assistant/**'
 
 env:
-  APP_ROOT_PATH: ./sendit-server
+  APP_ROOT_PATH: ./email-assistant
 
 jobs:
   Verify:

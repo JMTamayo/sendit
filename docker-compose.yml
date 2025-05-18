@@ -1,10 +1,10 @@
 services:
-  server:
+  email-assistant:
     build:
-      context: ./sendit-server
+      context: ./email-assistant
       dockerfile: Dockerfile
     env_file:
-      - ./.env
+      - ./email-assistant/.env
     ports:
       - "8000:8000"
     restart: unless-stopped
