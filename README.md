@@ -15,8 +15,6 @@ La aplicación se encuentra distribuida en los siguientes servicios:
 ## Ejecución del Proyecto:
 
 ### 1. Variables de Entorno:
-- Crear un archivo `.env` en la raiz del proyecto, a la misma altura que el archivo `docker-compose.yaml`.
-
 - Las siguientes variables de entorno son requeridas para la ejecución del proyecto completo. Para cada servicio se debe crear un archivo `.env` en su carpeta respectiva, con las variables de entorno necesarias para su ejecución.
 
     - **Filtro de logs**: Definir el valor de la variable con el nivel de logs que se desea obtener. Se sugiere usar el nivel `debug` para obtener todos los logs.
