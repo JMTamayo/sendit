@@ -9,6 +9,6 @@ RUN cargo build --release
 
 FROM rust:1.86.0-slim
 
-COPY --from=builder /app/target/release/sendit-email-consumer .
+COPY --from=builder /app/target/release/email-consumer .
 
 CMD ["./sendit-email-consumer"]
