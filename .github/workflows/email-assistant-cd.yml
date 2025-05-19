@@ -45,6 +45,12 @@ jobs:
             ${{ env.IMAGE_TAG_SHA }}
             ${{ env.IMAGE_TAG_LATEST }}
 
+  Deploy:
+    needs: Build
+    name: 'Deploy to Azure Container Apps'
+    runs-on: ubuntu-24.04
+
+    steps:
       - name: "Setup: Azure Login"
         uses: azure/login@v2
         with:
@@ -53,6 +59,6 @@ jobs:
       - name: "Deploy: Container App"
         uses: azure/container-apps-deploy-action@v2
         with:
-          imageToDeploy: ${{ env.IMAGE_TAG_LATEST }}
+          imageToDeploy: ${{ secrets.AZURE_URL }}/email-assistant:latest
           resourceGroup: ${{ secrets.AZURE_RESOURCE_GROUP }}
           containerAppName: ${{ secrets.AZURE_CONTAINER_APP_NAME_EMAIL_ASSISTANT }}
