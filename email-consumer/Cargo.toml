@@ -1,6 +1,6 @@
 [package]
-name = "sendit-email-consumer"
-description = "event consumer for massive emails sending"
+name = "email-consumer"
+description = "Event consumer for massive emails sending"
 version = "1.0.0"
 edition = "2021"
 license = "../LICENSE"

@@ -13,10 +13,10 @@ services:
 
   email-consumer:
     build:
-      context: ./sendit-email-consumer
+      context: ./email-consumer
       dockerfile: Dockerfile
     env_file:
-      - ./.env
+      - ./email-consumer/.env
     restart: unless-stopped
     networks:
       - sendit-network
@@ -26,7 +26,7 @@ services:
       context: ./redis-server
       dockerfile: Dockerfile
     env_file:
-      - ./.env
+      - ./redis-server/.env
     ports:
       - "6379:6379"
     restart: unless-stopped

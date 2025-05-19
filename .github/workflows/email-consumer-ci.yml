@@ -8,11 +8,11 @@ on:
     branches:
       - main
     paths:
-      - 'sendit-email-consumer/**'
+      - 'email-consumer/**'
 
 env:
   CARGO_TERM_COLOR: always
-  APP_ROOT_PATH: ./sendit-email-consumer
+  APP_ROOT_PATH: ./email-consumer
 
 jobs:
   Format:

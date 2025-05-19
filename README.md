@@ -8,7 +8,7 @@ Aplicación que permite el envío de emails de forma masiva mediante una arquite
 
 La aplicación se encuentra distribuida en los siguientes servicios:
 
-- `email-assistant`: Servidor que se encarga de recibir las solicitudes de envío de emails, de validarlos con ayuda de inteligencia artificial y de producir eventos al servicio de eventos para posteriormente ser procesados por el servicio de `sendit-email-consumer`.
+- `email-assistant`: Servidor que se encarga de recibir las solicitudes de envío de emails, de validarlos con ayuda de inteligencia artificial y de producir eventos al servicio de eventos para posteriormente ser procesados por el servicio de `email-consumer`.
 - `email-consumer`: Servidor que se encarga de consumir los eventos de redis y de enviar los emails.
 - `redis-server`: Servidor de eventos que se encarga de almacenar los eventos producidos por el servicio `email-assistant` y de distribuirlos al servidor `email-consumer` para su procesamiento. Este servicio es de uso opcional, ya que se puede usar un servidor de eventos externo.
 
