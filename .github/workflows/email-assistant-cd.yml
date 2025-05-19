@@ -1,0 +1,46 @@
+name: sendit-email-assistant-cd
+
+on:
+  workflow_run:
+    workflows: ["sendit-email-assistant-ci"]
+    types:
+      - completed
+
+jobs:
+  Build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: 'Build and Push to ACR'
+    runs-on: ubuntu-24.04
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: "Repository: Fetch"
+        uses: actions/checkout@v4
+
+      - name: "Setup: Docker Login"
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.AZURE_URL }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: "Setup: Create Image Tags"
+        id: vars
+        run: |
+          SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-7)
+          echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
+          echo "IMAGE_TAG_SHA=${{ secrets.AZURE_URL }}/email-assistant:$SHORT_SHA" >> $GITHUB_ENV
+          echo "IMAGE_TAG_LATEST=${{ secrets.AZURE_URL }}/email-assistant:latest" >> $GITHUB_ENV
+
+      - name: "Push: Save Image to ACR"
+        uses: docker/build-push-action@v2
+        with:
+          context: ./email-assistant
+          file: ./email-assistant/Dockerfile
+          push: true
+          tags: |
+            ${{ env.IMAGE_TAG_SHA }}
+            ${{ env.IMAGE_TAG_LATEST }}
