@@ -11,4 +11,4 @@ FROM rust:1.86.0-slim
 
 COPY --from=builder /app/target/release/email-consumer .
 
-CMD ["./sendit-email-consumer"]
+CMD ["./email-consumer"]
