@@ -116,7 +116,7 @@ impl Config {
     fn new() -> Self {
         let id: i64 = Utc::now().timestamp_millis();
 
-        let service_name: String = format!("sendit-email-consumer-{id}");
+        let service_name: String = format!("email-consumer-{id}");
         let log_level: String = env::var("LOG_LEVEL").unwrap_or("info".to_string());
 
         let redis_username: String = env::var("REDIS_USERNAME").expect("REDIS_USERNAME not found");
