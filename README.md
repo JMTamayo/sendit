@@ -2,7 +2,7 @@
 
 Aplicación que permite el envío de emails de forma masiva mediante una arquitectura orientada a eventos y basada en microservicios. En la siguiente imagen se puede observar el flujo de la aplicación, la cual está diseñada con fines educativos y de demostración.
 
-<img src="assets/flow-diagram.png" width="100%">
+<img src="assets/flow_diagram.png" width="100%">
 
 ## Distribución de la Aplicación:
 
