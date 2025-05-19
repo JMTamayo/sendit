@@ -20,7 +20,8 @@ La aplicación se encuentra distribuida en los siguientes servicios:
     - **Filtro de logs**: Definir el valor de la variable con el nivel de logs que se desea obtener. Se sugiere usar el nivel `debug` para obtener todos los logs.
 
         ```
-            LOG_LEVEL="debug
+            LOG_LEVEL="debug"
+            ALLOWED_ORIGINS (comma separated list of allowed origins)
         ```
 
     - **Credenciales de Redis**: Definir las credenciales y los parámetrospara conectarse con el servidor de eventos:

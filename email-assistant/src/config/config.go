@@ -60,9 +60,10 @@ func buildLogger(logLevel string) *Logger {
 }
 
 type Config struct {
-	serviceName string
-	servicePort int
-	logLevel    string
+	serviceName    string
+	servicePort    int
+	logLevel       string
+	allowedOrigins []string
 
 	redisUsername string
 	redisPassword string
@@ -88,6 +89,10 @@ func (c *Config) GetServiceAddress() string {
 
 func (c *Config) GetLogLevel() string {
 	return c.logLevel
+}
+
+func (c *Config) GetAllowedOrigins() []string {
+	return c.allowedOrigins
 }
 
 func (c *Config) GetRedisUsername() string {
@@ -130,7 +135,7 @@ func buildConfig() *Config {
 	serviceName := "sendit-email-assistant"
 	servicePort := 8000
 	logLevel := getFromEnv("LOG_LEVEL")
-
+	allowedOrigins := strings.Split(getFromEnv("ALLOWED_ORIGINS"), ",")
 	redisUsername := getFromEnv("REDIS_USERNAME")
 	redisPassword := getFromEnv("REDIS_PASSWORD")
 
@@ -161,6 +166,7 @@ func buildConfig() *Config {
 		keyNameData:          keyNameData,
 		geminiAPIKey:         geminiAPIKey,
 		geminiModel:          geminiModel,
+		allowedOrigins:       allowedOrigins,
 	}
 }
 

@@ -16,7 +16,10 @@ WORKDIR /dist
 
 RUN cp /build/main .
 
-FROM scratch
+FROM alpine:latest
+
+# Install ca-certificates
+RUN apk --no-cache add ca-certificates
 
 COPY --from=builder /dist/main /main
 
