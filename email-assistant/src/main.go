@@ -10,7 +10,7 @@ import (
 
 func main() {
 	docs.SwaggerInfo.Title = "Sendit - Email Assistant"
-	docs.SwaggerInfo.Version = "1.0.0"
+	docs.SwaggerInfo.Version = "1.0.1"
 
 	ctx := gin.Context{}
 
