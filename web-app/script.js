@@ -7,8 +7,7 @@ document.getElementById('emailForm').addEventListener('submit', async function(e
     const resultBox = document.getElementById('result');
 
     try {
-        //const response = await fetch('https://sendit-email-assistant.victoriousgrass-edd82384.westus2.azurecontainerapps.io/notifications/email', {
-        const response = await fetch('http://localhost:8000/notifications/email', {
+        const response = await fetch('https://sendit-email-assistant.victoriousgrass-edd82384.westus2.azurecontainerapps.io/notifications/email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
