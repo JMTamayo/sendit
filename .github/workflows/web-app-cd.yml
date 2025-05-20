@@ -33,9 +33,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: "Setup: Inject environment variables"
-        run: |
-          echo "APLICATION_URL=${{ secrets.APLICATION_URL }}" >> .env
       - name: "Upload: Artifact"
         uses: actions/upload-pages-artifact@v3
         with:
