@@ -7,6 +7,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	"email.assistant/src/api/routes"
+	"email.assistant/src/config"
 	"email.assistant/src/models"
 )
 
@@ -16,12 +17,12 @@ func BuildServer(ctx *gin.Context) (*gin.Engine, *models.Error) {
 	router := gin.Default()
 
 	// Configure CORS
-	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:3000"}
-	config.AllowMethods = []string{"POST", "OPTIONS"}
-	config.AllowHeaders = []string{"Origin", "Content-Type", "Accept", "Authorization"}
-	config.AllowCredentials = true
-	router.Use(cors.New(config))
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowOrigins = config.Conf.GetAllowedOrigins()
+	corsConfig.AllowMethods = []string{"POST", "OPTIONS"}
+	corsConfig.AllowHeaders = []string{"Origin", "Content-Type", "Accept", "Authorization"}
+	corsConfig.AllowCredentials = true
+	router.Use(cors.New(corsConfig))
 
 	emailRouter, err := routes.BuildEmailRouter(ctx)
 	if err != nil {
