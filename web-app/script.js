@@ -1,17 +1,5 @@
-const apiUrl = import.meta.env.APLICATION_URL;
-
-if (!apiUrl) {
-    console.error('API URL is not configured. Please check your environment variables.');
-    document.getElementById('result').className = 'result-box error';
-    document.getElementById('result').textContent = 'Application configuration error. Please contact support.';
-}
-
 document.getElementById('emailForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-
-    if (!apiUrl) {
-        return;
-    }
 
     const subject = document.getElementById('subject').value;
     const recipient = document.getElementById('recipient').value;
@@ -19,7 +7,7 @@ document.getElementById('emailForm').addEventListener('submit', async function(e
     const resultBox = document.getElementById('result');
 
     try {
-        const response = await fetch(`${apiUrl}`, {
+        const response = await fetch(`https://sendit-email-assistant.victoriousgrass-edd82384.westus2.azurecontainerapps.io`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
