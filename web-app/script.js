@@ -21,15 +21,15 @@ document.getElementById('emailForm').addEventListener('submit', async function(e
 
         if (response.status === 201) {
             resultBox.className = 'result-box success';
-            resultBox.textContent = 'Email sent successfully!';
+            resultBox.textContent = `Email sent successfully to ${recipient} with subject: "${subject}"!`;
         } else {
             const errorData = await response.json();
             resultBox.className = 'result-box error';
-            resultBox.textContent = `Error: ${errorData.details || 'Failed to send email. Please try again.'}`;
+            resultBox.textContent = `Error sending email to ${recipient} with subject "${subject}": ${errorData.details || 'Failed to send email. Please try again.'}`;
         }
     } catch (error) {
         resultBox.className = 'result-box error';
-        resultBox.textContent = `Error: ${error.details || 'Error connecting to the server. Please try again.'}`;
+        resultBox.textContent = `Error sending email to ${recipient} with subject "${subject}": ${error.details || 'Error connecting to the server. Please try again.'}`;
     }
 });
 
