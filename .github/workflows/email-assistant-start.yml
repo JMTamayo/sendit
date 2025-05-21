@@ -20,4 +20,4 @@ jobs:
       - name: "Start: Container App"
         shell: pwsh
         run: |
-            Start-AzContainerApp -Name ${{ secrets.AZURE_CONTAINER_APP_NAME_EMAIL_ASSISTANT }} -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }}
+            Start-AzContainerApp -Name ${{ secrets.AZURE_CONTAINER_APP_NAME_EMAIL_ASSISTANT }} -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} -SubscriptionId ${{ secrets.AZURE_SUSCRIPTION_ID }}
