@@ -1,0 +1,24 @@
+name: sendit-email-consumer-stop-app
+
+on:
+  workflow_dispatch:
+
+jobs:
+  Stop:
+    name: 'Stop Azure Container App'
+    runs-on: windows-latest
+
+    steps:
+      - name: "Repository: Fetch"
+        uses: actions/checkout@v4
+
+      - name: "Setup: Azure Login"
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+
+      - name: "Stop: Container App"
+        shell: pwsh
+        run: |
+            Stop-AzContainerApp -Name ${{ secrets.AZURE_CONTAINER_APP_NAME_EMAIL_CONSUMER }} -ResourceGroupName ${{ secrets.AZURE_RESOURCE_GROUP }} -SubscriptionId ${{ secrets.AZURE_SUSCRIPTION_ID }}
