@@ -7,15 +7,15 @@ document.getElementById('emailForm').addEventListener('submit', async function(e
     const resultBox = document.getElementById('result');
 
     try {
-        const response = await fetch(`https://sendit-email-assistant.victoriousgrass-edd82384.westus2.azurecontainerapps.io`, {
+        const response = await fetch(`https://sendit-email-assistant.victoriousgrass-edd82384.westus2.azurecontainerapps.io/notifications/email`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                subject,
-                recipient,
-                body
+                "subject": subject,
+                "recipient": recipient,
+                "body": body
             })
         });
 
